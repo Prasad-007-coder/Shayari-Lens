@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Shayari Lens</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Tiro+Devanagari+Hindi:ital@0;1&family=Tiro+Devanagari+Marathi:ital@0;1&family=Work+Sans:wght@400;500&display=swap">
+<style>
+:root{--paper:#f4efe6;--ink:#1c1915;--mute:#8a8174;--rule:#cfc6b6;--red:#a3361f;--frame:#1c1915;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#14120f;--ink:#ece5d8;--mute:#8f8677;--rule:#38332b;--red:#e0674c;--frame:#ece5d8;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#14120f;--ink:#ece5d8;--mute:#8f8677;--rule:#38332b;--red:#e0674c;--frame:#ece5d8;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:15px;line-height:1.5}
+main{max-width:640px;margin:0 auto;padding:28px 22px 72px}
+header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px}
+header b{font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:1.5rem}
+header span{font:italic 500 .95rem 'Cormorant Garamond',serif;color:var(--mute)}
+.lead{font:italic 500 1.35rem/1.3 'Cormorant Garamond',serif;margin:28px 0 22px;max-width:30ch}
+.label{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin:30px 0 10px}
+.stage{position:relative;aspect-ratio:4/5;background:#0000;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stage video,.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage i{position:absolute;width:18px;height:18px;border:0 solid var(--frame);opacity:.85}
+.stage i:nth-of-type(1){top:10px;left:10px;border-width:1px 0 0 1px}
+.stage i:nth-of-type(2){top:10px;right:10px;border-width:1px 1px 0 0}
+.stage i:nth-of-type(3){bottom:10px;left:10px;border-width:0 0 1px 1px}
+.stage i:nth-of-type(4){bottom:10px;right:10px;border-width:0 1px 1px 0}
+.stage p{margin:0;color:var(--mute);text-align:center;padding:0 40px;font:italic 500 1.1rem 'Cormorant Garamond',serif}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-top:14px;min-height:64px}
+.link{background:none;border:0;border-bottom:1px solid currentColor;padding:0 0 1px;font:inherit;color:var(--ink);cursor:pointer}
+.link:disabled{color:var(--mute);cursor:default}
+.shutter{width:64px;height:64px;border-radius:50%;border:1px solid var(--ink);background:none;padding:5px;cursor:pointer}
+.shutter::after{content:"";display:block;width:100%;height:100%;border-radius:50%;background:var(--ink)}
+.shutter:active::after{background:var(--red)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+.opts div{display:flex;flex-direction:column}
+.opts button{background:none;border:0;border-bottom:1px solid var(--rule);text-align:left;padding:9px 0;font:inherit;color:var(--mute);cursor:pointer;display:flex;justify-content:space-between}
+.opts button.on{color:var(--ink);border-bottom-color:var(--ink)}
+.opts button.on::after{content:"·";color:var(--red);font-size:1.4rem;line-height:.9}
+.go{display:block;width:100%;margin-top:34px;padding:16px;background:var(--ink);color:var(--paper);border:0;font:500 .8rem 'Work Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.go:disabled{opacity:.35;cursor:default}
+.status{margin-top:18px;color:var(--mute);font:italic 500 1.1rem 'Cormorant Garamond',serif;min-height:1.5em}
+.status.err{color:var(--red)}
+.wait{display:inline-block;width:56px;height:1px;background:var(--ink);vertical-align:middle;margin-left:10px;transform-origin:left;animation:w 1.4s ease-in-out infinite}
+@keyframes w{0%{transform:scaleX(.1)}60%{transform:scaleX(1)}100%{transform:scaleX(.1);opacity:.2}}
+.piece{margin-top:48px;border-top:1px solid var(--ink);padding-top:14px}
+.piece .tag{display:flex;justify-content:space-between;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.piece h2{font-weight:400;font-size:1.7rem;line-height:1.3;margin:18px 0 22px;color:var(--red)}
+.poem{font-size:1.2rem;line-height:2}
+.poem p{margin:0 0 1.4em;white-space:pre-line}
+.hi{font-family:'Tiro Devanagari Hindi','Noto Sans Devanagari',serif}
+.mr{font-family:'Tiro Devanagari Marathi','Noto Sans Devanagari',serif}
+.acts{display:flex;gap:22px;margin-top:4px;font-size:.82rem}
+.cap{font:italic 500 1.05rem 'Cormorant Garamond',serif;color:var(--mute);margin-top:10px}
+[hidden]{display:none!important}
+.langs{display:grid;grid-template-columns:repeat(3,1fr);gap:0 18px}
+.langs button{background:none;border:0;border-bottom:1px solid var(--rule);text-align:left;padding:9px 0;font:inherit;color:var(--mute);cursor:pointer;display:flex;justify-content:space-between;font-family:'Tiro Devanagari Hindi',serif}
+.langs button.on{color:var(--ink);border-bottom-color:var(--ink)}
+.langs button.on::after{content:"·";color:var(--red);font-size:1.4rem;line-height:.9}
+#about{width:100%;min-height:84px;resize:vertical;background:none;border:0;border-bottom:1px solid var(--ink);padding:8px 0;font:italic 500 1.1rem/1.5 'Cormorant Garamond',serif;color:var(--ink);outline:none}
+#about::placeholder{color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<header><b>शायरी लेंस</b><span>a photograph, read aloud as verse</span></header>
+<p class="lead">Ek tasveer kheencho. Hum use Hindi aur Marathi mein likhenge.</p>
+
+<div class="stage" id="stage">
+<i></i><i></i><i></i><i></i>
+<video id="vid" playsinline muted hidden></video>
+<img id="shot" alt="Captured photo" hidden>
+<p id="hint">Camera abhi band hai</p>
+</div>
+<div class="bar">
+<button class="link" id="open">Camera kholo</button>
+<button class="shutter" id="snap" aria-label="Photo kheencho" hidden></button>
+<button class="link" id="flip" hidden>Palto</button>
+<button class="link" id="gal">Gallery se chuno</button>
+</div>
+<input id="file" type="file" accept="image/*" hidden>
+<input id="cap" type="file" accept="image/*" capture="environment" hidden>
+
+<div class="label">Bhasha</div>
+<div class="langs" id="langs"><button data-l="hi" class="on">हिन्दी</button><button data-l="mr" class="on">मराठी</button><button data-l="ur">उर्दू</button></div>
+
+<div class="label">Mizaaj (left) · Lambai (right)</div>
+<div class="opts"><div id="tone">
+<button data-v="ishq, komal aur rooman" class="on">Ishq</button>
+<button data-v="halki-phulki, mazaakiya aur pyaari chhed-chhaad wali">Mazaak</button>
+<button data-v="dard-bhari, judaai aur yaadon wali">Dard</button>
+<button data-v="josh, himmat aur umeed se bhari">Josh</button>
+</div><div id="len">
+<button data-v="6 se 8 lines">Chhoti</button>
+<button data-v="12 se 16 lines, 3 se 4 bandon mein" class="on">Madhyam</button>
+<button data-v="20 se 28 lines, 5 se 7 bandon mein, ek poori kavita ki tarah">Lambi</button>
+</div></div>
+
+<div class="label">Unke baare mein, optional</div>
+<textarea id="about" maxlength="300" placeholder="Jaise: hamesha late aati hai, chai ki deewani, mera best friend"></textarea>
+<button class="go" id="go" disabled>Shayari likho</button>
+<div class="status" id="st"></div>
+<div id="out"></div>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+let stream=null,facing='environment',blob=null;
+
+function setStatus(t,err,wait){const s=$('st');s.className='status'+(err?' err':'');s.innerHTML=esc(t)+(wait?'<span class="wait"></span>':'')}
+function stopCam(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}$('vid').hidden=true;$('snap').hidden=true;$('flip').hidden=true}
+
+async function startCam(){
+  stopCam();$('shot').hidden=true;
+  try{
+    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:facing},width:{ideal:1280}},audio:false});
+    const v=$('vid');v.srcObject=stream;await v.play();
+    v.hidden=false;$('hint').hidden=true;$('snap').hidden=false;$('flip').hidden=false;$('open').textContent='Camera band karo';
+    setStatus('');
+  }catch(e){
+    $('hint').hidden=false;$('hint').textContent='Camera nahi khul paya';
+    window._noLive=true;$('hint').textContent='Live camera yahan allowed nahi';setStatus('Browser ke andar live camera block hai. "Camera kholo" dobara dabao, toh phone ka apna camera khulega.',true);
+  }
+}
+const liveOK=()=>{try{if(window._noLive||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return false;const fp=document.featurePolicy;return fp&&fp.allowsFeature?fp.allowsFeature('camera'):true}catch(e){return false}};
+$('open').onclick=()=>{ if(!liveOK()){$('cap').click();return} if(stream){stopCam();$('hint').hidden=false;$('hint').textContent='Camera abhi band hai';$('open').textContent='Camera kholo'} else startCam() };
+$('flip').onclick=()=>{facing=facing==='environment'?'user':'environment';startCam()};
+$('gal').onclick=()=>$('file').click();
+
+function shrink(src,w,h){
+  return new Promise((res,rej)=>{
+    const k=Math.min(1,1024/Math.max(w,h)),c=document.createElement('canvas');
+    c.width=Math.round(w*k);c.height=Math.round(h*k);
+    c.getContext('2d').drawImage(src,0,0,c.width,c.height);
+    c.toBlob(b=>b?res(b):rej(new Error('resize failed')),'image/jpeg',.85);
+  });
+}
+function show(b){
+  blob=b;$('shot').src=URL.createObjectURL(b);$('shot').hidden=false;
+  $('hint').hidden=true;$('go').disabled=false;$('out').innerHTML='';setStatus('');
+}
+$('snap').onclick=async()=>{
+  const v=$('vid');
+  const b=await shrink(v,v.videoWidth,v.videoHeight);
+  stopCam();$('open').textContent='Dobara kheencho';show(b);
+};
+$('cap').onchange=$('file').onchange=e=>{
+  const f=e.target.files[0];if(!f)return;
+  const im=new Image();
+  im.onload=async()=>{stopCam();show(await shrink(im,im.naturalWidth,im.naturalHeight));$('open').textContent='Camera kholo'};
+  im.onerror=()=>setStatus('Ye photo khul nahi paayi.',true);
+  im.src=URL.createObjectURL(f);e.target.value='';
+};
+
+$('langs').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.classList.contains('on')&&$('langs').querySelectorAll('.on').length===1)return;b.classList.toggle('on')};
+for(const g of ['tone','len'])$(g).onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;
+  [...$(g).children].forEach(x=>x.classList.remove('on'));b.classList.add('on');
+};
+const val=g=>$(g).querySelector('.on').dataset.v.replace(/\u001f/g,'');
+
+function piece(no,lang,cls,title,text,key){key=key||cls;
+  const paras=String(text).split(/\n\s*\n/).map(p=>'<p>'+esc(p.trim())+'</p>').join('');
+  return '<section class="piece"><div class="tag"><span>'+no+' · '+lang+'</span></div>'+
+  '<h2 class="'+cls+'">'+esc(title||'')+'</h2><div class="poem '+cls+'">'+paras+'</div>'+
+  '<div class="acts"><button class="link" data-copy="'+key+'">Copy</button><button class="link" data-share="'+key+'">Share</button></div></section>';
+}
+
+$('go').onclick=async()=>{
+  if(!blob)return;
+  $('go').disabled=true;$('out').innerHTML='';setStatus('Shayar tasveer padh raha hai',false,true);
+  try{
+        const langs=[...document.querySelectorAll('#langs .on')].map(b=>b.dataset.l);
+    const b64=await new Promise(ok=>{const f=new FileReader();f.onload=()=>ok(f.result.split(',')[1]);f.readAsDataURL(blob)});
+    const resp=await fetch('/api/poem',{method:'POST',signal:AbortSignal.timeout(65000),headers:{'content-type':'application/json'},body:JSON.stringify({langs,image:b64,tone:val('tone'),len:val('len'),about:$('about').value.trim()})});
+    const d=await resp.json();
+    if(!resp.ok)throw new Error(d.error||'Server error');
+    const r=d;
+    const defs={hi:['हिन्दी','hi',r.hindi_title,r.hindi],mr:['मराठी','mr',r.marathi_title,r.marathi],ur:['उर्दू अंदाज़ (देवनागरी में)','hi',r.urdu_title,r.urdu]};
+    const sel=langs.filter(k=>defs[k][3]);
+    window._p={};let n=0;const rom=['I','II','III'];
+    $('out').innerHTML=(r.caption?'<div class="cap">'+esc(r.caption)+'</div>':'')+sel.map(k=>{const d=defs[k];window._p[k]=d[3];return piece(rom[n++],d[0],d[1],d[2],d[3],k)}).join('');
+    setStatus('');
+    $('out').scrollIntoView({behavior:'smooth',block:'start'});
+  }catch(err){
+    setStatus('Kuch gadbad hui: '+((err&&err.message)||err),true);
+  }finally{$('go').disabled=false}
+};
+
+function copyText(t){
+  const fb=s=>{const a=document.createElement('textarea');a.value=s;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}a.remove()};
+  try{navigator.clipboard.writeText(t).catch(()=>fb(t))}catch(e){fb(t)}
+}
+$('out').onclick=e=>{
+  const k=e.target.dataset.copy||e.target.dataset.share;if(!k||!window._p)return;
+  const t=window._p[k],btn=e.target,old=btn.textContent;
+  if(btn.dataset.share&&navigator.share){navigator.share({text:t}).catch(()=>{});return}
+  copyText(t);btn.textContent='Copied';setTimeout(()=>btn.textContent=old,1400);
+};
+</script>
+</body>
+</html>
